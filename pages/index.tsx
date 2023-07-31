@@ -25,7 +25,7 @@ export default function Home() {
   }>({
     messages: [
       {
-        message: 'Hi, what would you like to learn about this document?',
+        message: 'Hola! Soy el asistente virtual de Connect Assistance, en que puedo ayudarte?',
         type: 'apiMessage',
       },
     ],
@@ -223,8 +223,8 @@ export default function Home() {
                     name="userInput"
                     placeholder={
                       loading
-                        ? 'Waiting for response...'
-                        : 'What is this legal case about?'
+                        ? 'Esperando por una respuesta...'
+                        : '¿Cuáles son los diferentes carriles que hay en Connect?'
                     }
                     value={query}
                     onChange={(e) => setQuery(e.target.value)}
@@ -260,11 +260,6 @@ export default function Home() {
             )}
           </main>
         </div>
-        <footer className="m-auto p-4">
-          <a href="https://twitter.com/mayowaoshin">
-            Powered by LangChainAI. Demo built by Mayo (Twitter: @mayowaoshin).
-          </a>
-        </footer>
       </Layout>
     </>
   );
