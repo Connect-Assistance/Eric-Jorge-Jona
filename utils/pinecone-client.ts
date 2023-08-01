@@ -1,7 +1,7 @@
 import { PineconeClient } from '@pinecone-database/pinecone';
 
 if (!process.env.PINECONE_ENVIRONMENT || !process.env.PINECONE_API_KEY) {
-  throw new Error('Pinecone environment or api key vars missing');
+  throw new Error('Falta el entorno Pinecone o las claves vars api');
 }
 
 async function initPinecone() {
@@ -16,7 +16,7 @@ async function initPinecone() {
     return pinecone;
   } catch (error) {
     console.log('error', error);
-    throw new Error('Failed to initialize Pinecone Client');
+    throw new Error('Error al inicializar Pinecone Client');
   }
 }
 

@@ -43,7 +43,6 @@ export default function Home() {
 
   //handle form submission
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    debugger;
     e.preventDefault();
     setError(null);
     if (!query) {
@@ -65,7 +64,7 @@ export default function Home() {
     setQuery('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/hackathon/query', {
+      const response = await fetch('http://localhost:3000/api/hackathon/query?prompt=' + question, {
         method: 'GET',
       });
       const data = await response.json();
@@ -79,8 +78,8 @@ export default function Home() {
             ...state.messages,
             {
               type: 'apiMessage',
-              message: data.message,
-              sourceDocs: data.sourceDocuments,
+              message: data.response.text,
+              sourceDocs: data.response.sourceDocuments,
             },
           ],
           history: [...state.history, [question, data.text]],
