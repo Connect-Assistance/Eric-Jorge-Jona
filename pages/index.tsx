@@ -64,9 +64,12 @@ export default function Home() {
     setQuery('');
 
     try {
-      const response = await fetch('http://localhost:3000/api/hackathon/query?prompt=' + question, {
-        method: 'GET',
-      });
+      const response = await fetch(
+        'http://localhost:3000/api/hackathon/query?prompt=' + question,
+        {
+          method: 'GET',
+        },
+      );
       const data = await response.json();
       console.log('data', data);
       if (data.error) {
@@ -151,38 +154,57 @@ export default function Home() {
                 return (
                   <div key={`chatMessage-${index}`} className={className}>
                     {icon}
-                    <div className={styles.markdownanswer}>
-                      <ReactMarkdown linkTarget="_blank">
-                        {message.message}
-                      </ReactMarkdown>
-                    </div>
-                    {message.sourceDocs && (
-                      <div className="p-5" key={`sourceDocsAccordion-${index}`}>
-                        <Accordion
-                          type="single"
-                          collapsible
-                          className="flex-col"
-                        >
-                          {message.sourceDocs.map((doc, index) => (
-                            <div key={`messageSourceDocs-${index}`}>
-                              <AccordionItem value={`item-${index}`}>
-                                <AccordionTrigger>
-                                  <h3>Source {index + 1}</h3>
-                                </AccordionTrigger>
-                                <AccordionContent>
-                                  <ReactMarkdown linkTarget="_blank">
-                                    {doc.pageContent}
-                                  </ReactMarkdown>
-                                  <p className="mt-2">
-                                    <b>Source:</b> {doc.metadata.source}
-                                  </p>
-                                </AccordionContent>
-                              </AccordionItem>
-                            </div>
-                          ))}
-                        </Accordion>
+                    <div style={{ width: '100%' }}>
+                      <div className={styles.markdownanswer}>
+                        <ReactMarkdown linkTarget="_blank">
+                          {message.message ===
+                            'No cuento con la información requerida para responderte en este momento.' &&
+                          (message.sourceDocs?.length || 0) > 0
+                            ? message.message +
+                              ' De igual forma te traigo las siguientes entradas que te podrian ser de utilidad...'
+                            : message.message}
+                        </ReactMarkdown>
                       </div>
-                    )}
+                      {message.sourceDocs && (
+                        <div key={`sourceDocsAccordion-${index}`}>
+                          <Accordion
+                            type="single"
+                            collapsible
+                            className="flex-col"
+                          >
+                            {message.sourceDocs.map((doc, index) => (
+                              <div key={`messageSourceDocs-${index}`}>
+                                <AccordionItem value={`item-${index}`}>
+                                  <AccordionTrigger>
+                                    <h3>Source {index + 1}</h3>
+                                  </AccordionTrigger>
+                                  <AccordionContent>
+                                    <ReactMarkdown linkTarget="_blank">
+                                      {doc.pageContent}
+                                    </ReactMarkdown>
+                                    <p className="mt-2">
+                                      <b>Source:</b>{' '}
+                                      <a
+                                        href={doc.metadata.url}
+                                        target="_blank"
+                                        style={{
+                                          fontWeight: 'bold',
+                                          color: 'blue',
+                                          textDecoration: 'underline',
+                                        }}
+                                      >
+                                        {' '}
+                                        Link{' '}
+                                      </a>
+                                    </p>
+                                  </AccordionContent>
+                                </AccordionItem>
+                              </div>
+                            ))}
+                          </Accordion>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 );
               })}
